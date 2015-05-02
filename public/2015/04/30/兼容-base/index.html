@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>js库之一些兼容函数的实现 | console</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="多浏览器的兼容是很烦人的，当时当IE6还依然活在一些人的脑海中的时候，当公司还在看重对ie6的兼容的时候，当xp都退役了，ie11都出来了，ie6还没有被抛弃，这说明微软的系统做的有多不成功，win8一个嘅开始按钮怎么没了，关机按钮都需要百度谷歌才能找到，有人会认真看微软的提示吗？很少吧，你他妈的赶快给我显示桌面，提示个鸟啊！我艹，桌面呢！这是win8？裤子都脱了，你给我显示这个，磁块就这么不受欢">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js库之一些兼容函数的实现">
+<meta property="og:url" content="http://yoursite.com/2015/04/30/兼容-base/index.html">
+<meta property="og:site_name" content="console">
+<meta property="og:description" content="多浏览器的兼容是很烦人的，当时当IE6还依然活在一些人的脑海中的时候，当公司还在看重对ie6的兼容的时候，当xp都退役了，ie11都出来了，ie6还没有被抛弃，这说明微软的系统做的有多不成功，win8一个嘅开始按钮怎么没了，关机按钮都需要百度谷歌才能找到，有人会认真看微软的提示吗？很少吧，你他妈的赶快给我显示桌面，提示个鸟啊！我艹，桌面呢！这是win8？裤子都脱了，你给我显示这个，磁块就这么不受欢">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js库之一些兼容函数的实现">
+<meta name="twitter:description" content="多浏览器的兼容是很烦人的，当时当IE6还依然活在一些人的脑海中的时候，当公司还在看重对ie6的兼容的时候，当xp都退役了，ie11都出来了，ie6还没有被抛弃，这说明微软的系统做的有多不成功，win8一个嘅开始按钮怎么没了，关机按钮都需要百度谷歌才能找到，有人会认真看微软的提示吗？很少吧，你他妈的赶快给我显示桌面，提示个鸟啊！我艹，桌面呢！这是win8？裤子都脱了，你给我显示这个，磁块就这么不受欢">
+  
+    <link rel="alternative" href="/atom.xml" title="console" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img lazy-src="" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">404err</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="/#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/about-move/" style="font-size: 15px;">about move</a><a href="/tags/android/" style="font-size: 10px;">android</a><a href="/tags/base库之动画效果/" style="font-size: 10px;">base库之动画效果</a><a href="/tags/chrome/" style="font-size: 20px;">chrome</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">404err</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">404err</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="/#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-兼容-base" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/04/30/兼容-base/" class="article-date">
+  	<time datetime="2015-04-30T15:58:27.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js库之一些兼容函数的实现
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chrome/">chrome</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="多浏览器的兼容是很烦人的，当时当IE6还依然活在一些人的脑海中的时候，当公司还在看重对ie6的兼容的时候，当xp都退役了，ie11都出来了，ie6还没有被抛弃，这说明微软的系统做的有多不成功，win8一个嘅开始按钮怎么没了，关机按钮都需要百度谷歌才能找到，有人会认真看微软的提示吗？">多浏览器的兼容是很烦人的，当时当IE6还依然活在一些人的脑海中的时候，当公司还在看重对ie6的兼容的时候，当xp都退役了，ie11都出来了，ie6还没有被抛弃，这说明微软的系统做的有多不成功，win8一个嘅开始按钮怎么没了，关机按钮都需要百度谷歌才能找到，有人会认真看微软的提示吗？</h5><h5 id="很少吧，你他妈的赶快给我显示桌面，提示个鸟啊！我艹，桌面呢！这是win8？裤子都脱了，你给我显示这个，磁块就这么不受欢迎吗？非的费劲找传统界面的入口，微软的理念很好，并且实现的很好，无奈用户被xp和win7洗脑严重不领情啊，这他妈的就是一坨翔，草泥马问候你xx！">很少吧，你他妈的赶快给我显示桌面，提示个鸟啊！我艹，桌面呢！这是win8？裤子都脱了，你给我显示这个，磁块就这么不受欢迎吗？非的费劲找传统界面的入口，微软的理念很好，并且实现的很好，无奈用户被xp和win7洗脑严重不领情啊，这他妈的就是一坨翔，草泥马问候你xx！</h5><h5 id="win8在我看来很好用，速度安全性易用性都甩了xp好几条街，可是微软忘了，用户想要的是什么，兼容性！我一个游戏玩的好好的，当了wen8一打开就崩溃各种提示，微软你们考虑过处女座的感受吗？你还让文艺处女座活吗？你直接x掉程序还提示个鸟说应用程序已崩溃，要不要等待或者强制关闭，就连我这个狮子座都受不了，提示能文艺点吗？能简单点吗？">win8在我看来很好用，速度安全性易用性都甩了xp好几条街，可是微软忘了，用户想要的是什么，兼容性！我一个游戏玩的好好的，当了wen8一打开就崩溃各种提示，微软你们考虑过处女座的感受吗？你还让文艺处女座活吗？你直接x掉程序还提示个鸟说应用程序已崩溃，要不要等待或者强制关闭，就连我这个狮子座都受不了，提示能文艺点吗？能简单点吗？</h5><h5 id="微软能不能解决兼容问题，新系统不再有兼容问题，用户特别在意这个，运行个程序就崩溃，再说什么易用速度安全美观，那都是扯犊子！用户不关心这个，只关心我喜欢的游戏能不喜欢的应用能不能完美运行。">微软能不能解决兼容问题，新系统不再有兼容问题，用户特别在意这个，运行个程序就崩溃，再说什么易用速度安全美观，那都是扯犊子！用户不关心这个，只关心我喜欢的游戏能不喜欢的应用能不能完美运行。</h5><h5 id="微软你们能不能站在用户的角度开发系统，你们是给用户用的，大部分还是小白用户，就是极客也不可能怀着极大的包容心去爬你们挖的坑！">微软你们能不能站在用户的角度开发系统，你们是给用户用的，大部分还是小白用户，就是极客也不可能怀着极大的包容心去爬你们挖的坑！</h5><h5 id="扯的好爽，接下来进入正题，关于ie和w3c浏览器的兼容问题的解决方案">扯的好爽，接下来进入正题，关于ie和w3c浏览器的兼容问题的解决方案</h5><pre><code><span class="function"><span class="keyword">function</span> <span class="title">getInner</span><span class="params">()</span></span>{
+
+    <span class="comment">//判断widnow的innerWidth属性，undefined说明是ie不支持这个属性，</span>
+
+    <span class="comment">//ie支持document.documentElement.clientWidth属性，火狐支持这个属性</span>
+
+    <span class="comment">//w3c都支持</span>
+
+    <span class="comment">//然后根据各自支持的属性获取width和height的值(浏览器窗口的高和宽))</span>
+
+    <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">window</span>.innerWidth!=<span class="string">'undefined'</span>){
+
+        <span class="keyword">return</span> {
+
+            width:<span class="built_in">window</span>.innerWidth,
+
+            height:<span class="built_in">window</span>.innerHeight
+
+        }
+
+    }<span class="keyword">else</span>{
+
+        <span class="keyword">return</span> {
+
+            width:<span class="built_in">document</span>.documentElement.clientWidth, 
+
+            height:<span class="built_in">document</span>.documentElement.clientHeight
+
+        }
+    }
+}
+</code></pre><h1 id="获取形式的兼容实现">获取形式的兼容实现</h1><pre><code><span class="function"><span class="keyword">function</span> <span class="title">getStyle</span><span class="params">(element,attr)</span></span>{
+
+<span class="comment">//ie支持element.currentStyle[attr]</span>
+
+<span class="comment">//w3c支持window.getComputedStyle</span>
+
+    <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">window</span>.getComputedStyle!=<span class="string">'undefined'</span>){
+
+        <span class="keyword">return</span> <span class="built_in">window</span>.getComputedStyle(element,<span class="literal">null</span>)[attr];
+
+    }<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> element.currentStyle!=<span class="string">'undefined'</span>){
+
+        <span class="keyword">return</span> element.currentStyle[attr];
+
+    }
+}
+</code></pre><h1 id="跨浏览器或link规则">跨浏览器或link规则</h1><pre><code><span class="comment">//第num个link规则，通过那个link链接进来的css文件</span>
+
+sheet=<span class="built_in">document</span>.styleSheets[num]
+
+<span class="comment">//selectorText选择那个元素的id、class或者标签名,</span>
+
+<span class="comment">//cssText要设置的样式内容,</span>
+
+<span class="comment">//position要添加到选择的css文件中的那个位置</span>
+
+<span class="function"><span class="keyword">function</span> <span class="title">insertRule</span><span class="params">(sheet,selectorText,cssText,position)</span></span>{
+
+    <span class="comment">//sheet.insertRule是w3c支持的属性，删除则是sheet.deleteRule</span>
+
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> sheet.insertRule!=<span class="string">'undefined'</span>) {
+
+        sheet.insertRule(selectorText+<span class="string">'{'</span>+cssText+<span class="string">'}'</span>,position);
+
+    }<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> sheet.addRule!=<span class="string">'undefined'</span>){
+
+        <span class="comment">//sheet.addRule是ie支持的属性,删除则是sheet.removeRule</span>
+
+        sheet.addRule(selectorText,cssText,position);
+
+    } 
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">removeRule</span><span class="params">(sheet,index)</span></span>{
+
+    <span class="comment">//w3c支持这个属性</span>
+
+    <span class="keyword">if</span>(<span class="keyword">typeof</span> sheet.deleteRule!=<span class="string">'undefined'</span>){
+
+        sheet.deleteRule(index);
+
+    <span class="comment">//IE支持这个属性</span>
+
+    }<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> sheet.removeRule!=<span class="string">'undefined'</span>){
+
+        sheet.removeRule(index);
+
+    }
+}
+
+<span class="comment">//在base库中使用上面兼容函数</span>
+
+Base.prototype.addRule=<span class="function"><span class="keyword">function</span><span class="params">(numm,selectorText,cssText,position)</span></span>{
+
+<span class="comment">//第num个link规则，通过那个link链接进来的css文件</span>
+
+    sheet=<span class="built_in">document</span>.styleSheets[num];
+
+    <span class="comment">//向html中添加规则</span>
+
+    insertRule(sheet,selectorText,cssText,position);
+
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+
+}
+
+Base.prototype.removeRule=<span class="function"><span class="keyword">function</span><span class="params">(numm,index)</span></span>{
+
+<span class="comment">//第num个link规则，通过那个link链接进来的css文件</span>
+
+    sheet=<span class="built_in">document</span>.styleSheets[num];
+
+    <span class="comment">//从html中删除规则</span>
+
+    removeRule(sheet,index)
+
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+
+}
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/04/30/分页的实现/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          分页的实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/30/元素的点击行为/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="兼容-base" data-title="js库之一些兼容函数的实现" data-url="http://yoursite.com/2015/04/30/兼容-base/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 404err
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>

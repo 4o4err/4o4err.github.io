@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>js库之遮蔽罩 | console</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在弹出窗口登陆的时候，页面其他的地方不能进行交互操作，只能在当前弹出的窗口进行相应的操作，实现这一功能需要占满当前浏览器窗口的div元素，并且设置样式z-index足够大，z-index和页面层次有关，值越大层次越靠前，当值比其他元素都大，这个元素就在其他元素的最前面，当这个元素占满窗口，页面的其他部分就不能响应用户的操作了，只能操作在页面最前面的元素。遮蔽罩就是这个原理，她的z-index值只比">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js库之遮蔽罩">
+<meta property="og:url" content="http://yoursite.com/2015/04/30/lock-base/index.html">
+<meta property="og:site_name" content="console">
+<meta property="og:description" content="在弹出窗口登陆的时候，页面其他的地方不能进行交互操作，只能在当前弹出的窗口进行相应的操作，实现这一功能需要占满当前浏览器窗口的div元素，并且设置样式z-index足够大，z-index和页面层次有关，值越大层次越靠前，当值比其他元素都大，这个元素就在其他元素的最前面，当这个元素占满窗口，页面的其他部分就不能响应用户的操作了，只能操作在页面最前面的元素。遮蔽罩就是这个原理，她的z-index值只比">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js库之遮蔽罩">
+<meta name="twitter:description" content="在弹出窗口登陆的时候，页面其他的地方不能进行交互操作，只能在当前弹出的窗口进行相应的操作，实现这一功能需要占满当前浏览器窗口的div元素，并且设置样式z-index足够大，z-index和页面层次有关，值越大层次越靠前，当值比其他元素都大，这个元素就在其他元素的最前面，当这个元素占满窗口，页面的其他部分就不能响应用户的操作了，只能操作在页面最前面的元素。遮蔽罩就是这个原理，她的z-index值只比">
+  
+    <link rel="alternative" href="/atom.xml" title="console" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img lazy-src="" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">404err</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="/#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/about-move/" style="font-size: 15px;">about move</a><a href="/tags/android/" style="font-size: 10px;">android</a><a href="/tags/base库之动画效果/" style="font-size: 10px;">base库之动画效果</a><a href="/tags/chrome/" style="font-size: 20px;">chrome</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">404err</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">404err</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="/#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-lock-base" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/04/30/lock-base/" class="article-date">
+  	<time datetime="2015-04-30T15:58:27.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js库之遮蔽罩
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chrome/">chrome</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="在弹出窗口登陆的时候，页面其他的地方不能进行交互操作，只能在当前弹出的窗口进行相应的操作，实现这一功能需要占满当前浏览器窗口的div元素，并且设置样式z-index足够大，z-index和页面层次有关，值越大层次越靠前，当值比其他元素都大，这个元素就在其他元素的最前面，当这个元素占满窗口，页面的其他部分就不能响应用户的操作了，只能操作在页面最前面的元素。">在弹出窗口登陆的时候，页面其他的地方不能进行交互操作，只能在当前弹出的窗口进行相应的操作，实现这一功能需要占满当前浏览器窗口的div元素，并且设置样式z-index足够大，z-index和页面层次有关，值越大层次越靠前，当值比其他元素都大，这个元素就在其他元素的最前面，当这个元素占满窗口，页面的其他部分就不能响应用户的操作了，只能操作在页面最前面的元素。</h5><h5 id="遮蔽罩就是这个原理，她的z-index值只比弹出的窗口的值小一点点，这样就实现只能操作弹出窗口的需求，没有她，可能页面显示不止一个的弹出窗口，这时候页面的用户体验就是一坨热乎乎的翔，浏览者心中会有成千上万只草泥马飘过！">遮蔽罩就是这个原理，她的z-index值只比弹出的窗口的值小一点点，这样就实现只能操作弹出窗口的需求，没有她，可能页面显示不止一个的弹出窗口，这时候页面的用户体验就是一坨热乎乎的翔，浏览者心中会有成千上万只草泥马飘过！</h5><h2 id="下面是具体实现过程！">下面是具体实现过程！</h2><h5 id="首先在html代码中添加一个div元素，设置样式"><strong><em>首先在html代码中添加一个div元素，设置样式</em></strong></h5><pre><code><span class="tag">screen</span>{
+
+    <span class="comment">//相对定位，她必须铺满整个浏览器窗口</span>
+
+    <span class="attribute">position</span>: absolute;
+
+    <span class="attribute">top</span>: <span class="number">0</span>;
+
+    <span class="attribute">left</span>: <span class="number">0</span>;
+
+    <span class="attribute">background-color</span>: <span class="hexcolor">#666</span>;
+
+    <span class="attribute">z-index</span>: <span class="number">9998</span>;
+
+    <span class="comment">//设置透明程度，让页面其他内容能被看到，到不能操作</span>
+    <span class="comment">//ie设置背景透明不一样：filter:alpha(opacity=30)</span>
+
+    <span class="attribute">opacity</span>: <span class="number">0.3</span>;
+
+    <span class="attribute">opacity</span>: <span class="number">0</span>;
+
+    <span class="comment">//默认是不显示，她时随着弹出窗口的弹出而显示的！</span>
+
+    <span class="attribute">display</span>: none;
+}
+</code></pre><h2 id="样式设置完毕，接下来就由js来具体实现了，在页面中添加一个登录或者其他按钮，点击以后会弹出窗口并相识遮蔽罩，"><strong><em>样式设置完毕，接下来就由js来具体实现了，在页面中添加一个登录或者其他按钮，点击以后会弹出窗口并相识遮蔽罩，</em></strong></h2><pre><code><span class="keyword">var</span> login=$(<span class="string">'#login'</span>);
+
+<span class="comment">//首先让弹出窗口居中显示(center函数)，当浏览器窗口改变大小(resize函数),</span>
+
+<span class="comment">//弹窗再次调用center函数让窗口居中显示，这样用户体验会很好！</span>
+
+ login.center(<span class="number">400</span>,<span class="number">300</span>).resize(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+
+     <span class="comment">//login.center(400,300);</span>
+
+     <span class="comment">//判断弹窗当前是不是显示，显示(display:block),</span>
+
+     <span class="keyword">if</span>(login.css(<span class="string">'display'</span>)==<span class="string">'block'</span>){
+
+     <span class="comment">//再让遮蔽罩显示并改变大小(lock()函数，后面会说她的功能！)</span>
+
+         $(<span class="string">'#screen'</span>).lock();
+
+     }
+
+ });
+
+ <span class="comment">//当点击登录按钮，弹出登录窗口，</span>
+
+ $(<span class="string">'#header .login'</span>).click(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+
+ <span class="comment">//并让弹窗居中显示</span>
+
+     login.center(<span class="number">400</span>,<span class="number">300</span>)
+
+     <span class="comment">//默认弹窗是不显示的，也没必要显示出来</span>
+
+     login.css(<span class="string">'display'</span>,<span class="string">'block'</span>);
+
+     <span class="comment">//遮蔽罩调用lock()函数，显示并铺满整个屏幕，并加入动画效果(动画效果后面再说)</span>
+
+     $(<span class="string">'#screen'</span>).lock().animate({
+
+         <span class="string">'attr'</span>:<span class="string">'o'</span>,
+
+         <span class="string">'target'</span>:<span class="number">65</span>,
+
+         <span class="string">'step'</span>:<span class="number">10</span>,
+
+         <span class="string">'t'</span>:<span class="number">30</span>
+
+     });
+
+ });
+
+ <span class="comment">//当关闭弹窗</span>
+
+ $(<span class="string">'#login .close'</span>).click(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+
+ <span class="comment">//弹窗关闭</span>
+
+     login.css(<span class="string">'display'</span>,<span class="string">'none'</span>);
+
+     <span class="comment">//再遮蔽罩消失之前会有动画效果(动画效果后面再说)，然后再消失(调用unlock())</span>
+
+     $(<span class="string">'#screen'</span>).animate({
+
+         <span class="string">'attr'</span>:<span class="string">'o'</span>,
+
+         <span class="string">'target'</span>:<span class="number">0</span>,
+
+         <span class="string">'step'</span>:<span class="number">10</span>,
+
+         <span class="string">'t'</span>:<span class="number">30</span>,
+
+         fn:<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+
+             $(<span class="string">'#screen'</span>).unlock();
+
+         }
+
+     });
+
+ });
+</code></pre><h2 id="下面说说lock和unlock函数是怎么实现的"><strong><em>下面说说lock和unlock函数是怎么实现的</em></strong></h2><h1 id="lock函数实现">lock函数实现</h1><pre><code>Base.prototype.lock=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+
+    <span class="comment">//for循环的目的是获取代表遮蔽罩的元素</span>
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.nodes.length; i++) {
+
+        fixedScroll.top=getScroll().top;
+
+        fixedScroll.left=getScroll().left;
+
+        <span class="comment">//获取left值</span>
+
+        <span class="keyword">var</span> left=getScroll().left;
+
+        <span class="comment">//让遮蔽罩显示</span>
+
+        <span class="keyword">this</span>.nodes[i].style.display=<span class="string">'block'</span>;
+
+        <span class="comment">//当浏览器的窗口大小改变的时候，重新设置遮蔽罩的width和height值</span>
+
+        <span class="keyword">this</span>.nodes[i].style.width=getInner().width+getScroll().left+<span class="string">'px'</span>;
+
+        <span class="keyword">this</span>.nodes[i].style.height=getInner().height+getScroll().top+<span class="string">'px'</span>;
+
+        <span class="comment">//this.nodes[i].style.display='block';</span>
+
+        <span class="comment">//给遮蔽罩添加mousedown和mouseup事件，执行predef事件，这个后面细说</span>
+
+        addEvent(<span class="keyword">this</span>.nodes[i],<span class="string">'mousedown'</span>,predef);
+
+        addEvent(<span class="keyword">this</span>.nodes[i],<span class="string">'mouseup'</span>,predef);
+
+        addEvent(<span class="keyword">this</span>.nodes[i],<span class="string">'selectstart'</span>,predef);
+
+        <span class="comment">//overflow属性忘记了，可能和滚动条有关！</span>
+
+        <span class="built_in">document</span>.documentElement.style.overflow=<span class="string">'hidden'</span>;
+
+        addEvent(<span class="built_in">window</span>,<span class="string">'scroll'</span>,fixedScroll);
+
+    }
+
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+
+}
+</code></pre><h1 id="unlock函数实现">unlock函数实现</h1><pre><code>Base.prototype.unlock=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+
+    <span class="comment">//for循环的目的是获取代表遮蔽罩的元素</span>
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.nodes.length; i++) {
+
+    <span class="comment">//遮蔽罩隐藏</span>
+
+        <span class="keyword">this</span>.nodes[i].style.display=<span class="string">'none'</span>;
+
+        <span class="comment">//宽和高都设为0</span>
+
+        <span class="keyword">this</span>.nodes[i].style.width=<span class="number">0</span>;
+
+        <span class="keyword">this</span>.nodes[i].style.height=<span class="number">0</span>;
+        <span class="comment">//移除在lock函数中的事件</span>
+        removeEvent(<span class="built_in">window</span>,<span class="string">'scroll'</span>,fixedScroll);
+
+        removeEvent(<span class="keyword">this</span>.nodes[i],<span class="string">'mousedown'</span>,predef);
+
+        removeEvent(<span class="keyword">this</span>.nodes[i],<span class="string">'mouseup'</span>,predef);
+
+        removeEvent(<span class="keyword">this</span>.nodes[i],<span class="string">'selectstart'</span>,predef);
+
+    }
+
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+
+}
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/04/30/login-base/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          js库之弹出窗口
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/30/线上幽灵读后感/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">线上幽灵读后感</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="lock-base" data-title="js库之遮蔽罩" data-url="http://yoursite.com/2015/04/30/lock-base/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 404err
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>
